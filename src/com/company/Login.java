@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.sql.Statement;
 
 public class Login {
     public static int attempt = 0;
-    public static String[] login(String[] details, Connection conn) {
+    public static String[] login(String[] details, Connection conn, JFrame menuWindow) {
         String username = details[0];
         String password = details[1];
         String dataRole = null;
@@ -24,23 +25,29 @@ public class Login {
                 dataPassword = rs.getString("PASSWORD");
                 dataRole = rs.getString("ROLE");
                 if (dataUsername.equals(username) && dataPassword.equals(password)) {
-                    System.out.println("Correct Login details!\nHello " + username);
+                    JOptionPane.showMessageDialog(null, "Correct Login details!\nHello " + username);
                     success = true;
                 }
                 if (success) {
                     break;
                 }
             }
+
             if (!success) {
                 attempt+=1;
                 if(attempt == 3){
-                    System.out.println("Login Failed");
+                    JOptionPane.showMessageDialog(null, "Login Failed");
                     System.exit(0);
                 }
                 else {
-                    System.out.println("Incorrect User Code\nYou have " + (3 - attempt) + " more attempt(s)");
+                    JOptionPane.showMessageDialog(null, "Incorrect User Code\nYou have " + (3 - attempt) + " more attempt(s)");
+
+                    Main.loginFailReturn(menuWindow);
                  //   login(details); //when user logs in again takes them to the user menu not the admin menu
                 }
+            }
+            if (success) {
+                UserMenu.createGUI(menuWindow, conn);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

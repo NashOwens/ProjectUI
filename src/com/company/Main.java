@@ -10,14 +10,15 @@ public class Main {
 
     public static void main(String[] args) {
         JFrame temp = new JFrame();
-        JFrame menuWindow = LoginMenu.createGUI(temp);
-        menuWindow.setSize(400,150);
-        menuWindow.setVisible(true);
+        JFrame menuWindow = LoginMenu.createGUI(temp, connect());
 
+    }
+    public static void loginFailReturn(JFrame menuWindow) {
+        LoginMenu.createGUI(menuWindow, connect());
     }
 
     public static Connection connect() {
-        String fileName = "C:/sqlite/db/Test.db";
+        String fileName = "C:/sqlite/db/inventoryMangSys.db";
         String url = "jdbc:sqlite:" + fileName;
         // SQLite connection string
         Connection conn = null;
