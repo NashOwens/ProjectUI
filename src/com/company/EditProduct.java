@@ -7,10 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
 import static java.lang.Integer.parseInt;
 
-public abstract class AddProduct extends JFrame implements ActionListener {
+public abstract class EditProduct extends JFrame implements ActionListener {
 
     public static JFrame createGUI(JFrame menuWindow) {
         menuWindow.setLayout(new GridBagLayout());
@@ -57,7 +56,7 @@ public abstract class AddProduct extends JFrame implements ActionListener {
                 String pLoc = productLocation.getText();
                 int pStock = parseInt(stockQuantity.getText());
 
-                AddProd(pId, pPrice, pStock, pName, pLoc);
+                EditProd(pId, pName, pPrice, pLoc, pStock);
             } catch (NullPointerException ex) {
                 JOptionPane.showMessageDialog(null, ex.toString());
             } finally {
@@ -87,35 +86,52 @@ public abstract class AddProduct extends JFrame implements ActionListener {
 
         return menuWindow;
     }
-    public static void AddProd(int pId, int pPrice, int pStock, String pName, String pLoc) {
-        String sql = "INSERT INTO products(PRODUCT_ID,PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_LOCATION,PRODUCT_STOCK) VALUES(?,?,?,?,?)";
+    public static void EditProd(int ID, String pName, int pPrice, String pLocation, int pStock) {
         Connection conn = Main.connect();
+        String sql = "";
         try {
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-
-            pstmt.setInt(1, pId);
-            pstmt.setString(2, pName);
-            pstmt.setInt(3, pPrice);
-            pstmt.setString(4, pLoc);
-            pstmt.setInt(5, pStock);
-
-            pstmt.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Item added!");
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        } finally {
+            sql = "UPDATE products SET PRODUCT_NAME = ? WHERE ID = ?";
+            PreparedStatement preparedStmt = conn.prepareStatement(sql);
+            preparedStmt.setString(1, pName);
+            preparedStmt.setInt(2, ID);
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        try {
+            sql = "UPDATE products SET PRODUCT_PRICE = ? WHERE ID = ?";
+            PreparedStatement preparedStmt = conn.prepareStatement(sql);
+            preparedStmt.setInt(1, pPrice);
+            preparedStmt.setInt(2, ID);
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        try {
+            sql = "UPDATE products SET PRODUCT_LOCATION = ? WHERE ID = ?";
+            PreparedStatement preparedStmt = conn.prepareStatement(sql);
+            preparedStmt.setString(1, pLocation);
+            preparedStmt.setInt(2, ID);
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        try {
+            sql = "UPDATE products SET PRODUCT_STOCK = ? WHERE ID = ?";
+            PreparedStatement preparedStmt = conn.prepareStatement(sql);
+            preparedStmt.setInt(1, pStock);
+            preparedStmt.setInt(2, ID);
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+         finally {
+            JOptionPane.showMessageDialog(null, "Product Details Changed!");
             try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e.toString());
             }
         }
-
     }
 }
-

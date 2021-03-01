@@ -19,7 +19,7 @@ public abstract class LoginMenu extends JFrame implements ActionListener {
     public static JFrame createGUI(JFrame menuWindow, Connection conn) {
 
         menuWindow.setLayout(new GridBagLayout());
-        menuWindow.setSize(1920,1080);
+        menuWindow.setSize(2000,1000);
         menuWindow.setVisible(true);
 
         JLabel user = new JLabel("Username: ");

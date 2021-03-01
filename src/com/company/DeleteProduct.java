@@ -15,11 +15,10 @@ public abstract class DeleteProduct extends JFrame implements ActionListener {
     private static JTextField ID;
     private static JButton Submit;
 
-    public static JFrame productDelSelc(JFrame menuWindow, Connection conn){
-
+    public static JFrame productDelSelc(JFrame menuWindow){
 
         menuWindow.setLayout(new GridBagLayout());
-        menuWindow.setSize(400, 100);
+        menuWindow.setSize(2000, 1001);
 
 
         JLabel enterID = new JLabel("Enter item ID:");

@@ -15,7 +15,7 @@ public abstract class UserMenu extends JFrame implements ActionListener {
     public static JFrame createGUI(JFrame menuWindow, Connection conn) {
 
         menuWindow.setLayout(new GridBagLayout());
-        menuWindow.setSize(100, 100);
+        menuWindow.setSize(2000, 1002);
 
         deleteProduct = new JButton("Delete Product");
         menuWindow.add(deleteProduct);
@@ -23,12 +23,15 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         addProduct = new JButton("Add Product");
         menuWindow.add(addProduct);
 
+        JButton editProduct = new JButton("Edit Product");
+        menuWindow.add(editProduct);
+
         deleteProduct.addActionListener(e -> {
             if (e.getSource() == deleteProduct) {
                 try {
-                    DeleteProduct.productDelSelc(removeAll(menuWindow, deleteProduct, addProduct), conn);
+                    DeleteProduct.productDelSelc(removeAll(menuWindow, deleteProduct, addProduct, editProduct));
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, e.toString());
+                    JOptionPane.showMessageDialog(null, ex.toString());
                 }
             }
         });
@@ -36,9 +39,19 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         addProduct.addActionListener(e -> {
             if (e.getSource() == addProduct) {
                 try {
-                    AddProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct));
+                    AddProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct));
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, e.toString());
+                    JOptionPane.showMessageDialog(null, ex.toString());
+                }
+            }
+        });
+
+        editProduct.addActionListener(e -> {
+            if (e.getSource() == editProduct) {
+                try {
+                    EditProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.toString());
                 }
             }
         });
@@ -49,9 +62,10 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         return UserMenu.createGUI(menuWindow, Main.connect());
     }
 
-    public static JFrame removeAll(JFrame menuWindow, JButton deleteProduct, JButton addProduct) {
+    public static JFrame removeAll(JFrame menuWindow, JButton deleteProduct, JButton addProduct, JButton editProduct){
         menuWindow.remove(deleteProduct);
         menuWindow.remove(addProduct);
+        menuWindow.remove(editProduct);
         return menuWindow;
 
     }
