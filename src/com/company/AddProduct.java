@@ -112,6 +112,7 @@ public abstract class AddProduct extends JFrame implements ActionListener {
                     conn.close();
                 }
             } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Please enter valid data types!");
                 System.out.println(ex.getMessage());
             }
         }

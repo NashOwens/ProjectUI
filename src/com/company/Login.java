@@ -41,9 +41,8 @@ public class Login {
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Incorrect User Code\nYou have " + (3 - attempt) + " more attempt(s)");
-
                     Main.loginFailReturn(menuWindow);
-                 //   login(details); //when user logs in again takes them to the user menu not the admin menu
+
                 }
             }
             if (success) {

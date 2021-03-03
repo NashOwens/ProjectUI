@@ -63,7 +63,6 @@ public abstract class EditProduct extends JFrame implements ActionListener {
                 UserMenu.userMenuReturn(removeAll(menuWindow, enterID, enterProductName, enterProductPrice, enterProductLocation,
                         enterStockQuantity, ID, productName, productPrice, productLocation, stockQuantity, submit));
             }
-
         });
 
         return menuWindow;
@@ -96,6 +95,7 @@ public abstract class EditProduct extends JFrame implements ActionListener {
             preparedStmt.setInt(2, ID);
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Enter a valid ID");
             System.out.println(e.toString());
         }
         try {
@@ -105,6 +105,7 @@ public abstract class EditProduct extends JFrame implements ActionListener {
             preparedStmt.setInt(2, ID);
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Enter a valid price");
             System.out.println(e.toString());
         }
         try {
@@ -114,6 +115,7 @@ public abstract class EditProduct extends JFrame implements ActionListener {
             preparedStmt.setInt(2, ID);
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Enter a valid Location");
             System.out.println(e.toString());
         }
         try {
@@ -123,6 +125,7 @@ public abstract class EditProduct extends JFrame implements ActionListener {
             preparedStmt.setInt(2, ID);
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Enter a valid Stock Amount");
             System.out.println(e.toString());
         }
          finally {

@@ -26,10 +26,13 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         JButton editProduct = new JButton("Edit Product");
         menuWindow.add(editProduct);
 
+        JButton searchProduct = new JButton("Search Product");
+        menuWindow.add(searchProduct);
+
         deleteProduct.addActionListener(e -> {
             if (e.getSource() == deleteProduct) {
                 try {
-                    DeleteProduct.productDelSelc(removeAll(menuWindow, deleteProduct, addProduct, editProduct));
+                    DeleteProduct.productDelSelc(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
@@ -39,7 +42,7 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         addProduct.addActionListener(e -> {
             if (e.getSource() == addProduct) {
                 try {
-                    AddProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct));
+                    AddProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
@@ -49,7 +52,17 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         editProduct.addActionListener(e -> {
             if (e.getSource() == editProduct) {
                 try {
-                    EditProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct));
+                    EditProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.toString());
+                }
+            }
+        });
+
+        searchProduct.addActionListener(e -> {
+            if (e.getSource() == searchProduct) {
+                try {
+                    SearchProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
@@ -62,10 +75,11 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         return UserMenu.createGUI(menuWindow, Main.connect());
     }
 
-    public static JFrame removeAll(JFrame menuWindow, JButton deleteProduct, JButton addProduct, JButton editProduct){
+    public static JFrame removeAll(JFrame menuWindow, JButton deleteProduct, JButton addProduct, JButton editProduct, JButton searchProduct){
         menuWindow.remove(deleteProduct);
         menuWindow.remove(addProduct);
         menuWindow.remove(editProduct);
+        menuWindow.remove(searchProduct);
         return menuWindow;
 
     }
