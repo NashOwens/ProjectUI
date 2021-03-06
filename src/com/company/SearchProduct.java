@@ -15,6 +15,9 @@ import static java.lang.Integer.parseInt;
 
 public abstract class SearchProduct extends JFrame implements ActionListener {
 
+    private static JScrollPane database;
+    private static JInternalFrame dataArea;
+
     public static JFrame createGUI(JFrame menuWindow) {
 
         menuWindow.setLayout(new GridBagLayout());
@@ -32,11 +35,11 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
         search.addActionListener(e -> {
             if (e.getSource() == search) {
                 try {
-                    JInternalFrame dataArea = new JInternalFrame("Item",false, true, false, false);
+                    dataArea = new JInternalFrame("Item",false, true, false, false);
                     dataArea.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                     dataArea.setLayout(new GridBagLayout());
                     dataArea.setSize(20,20);
-                    JScrollPane database = new JScrollPane(pSearch(searchBar));
+                    database = new JScrollPane(pSearch(searchBar));
                     database.setSize(10,5);
                     dataArea.add(database);
                     menuWindow.add(dataArea);
@@ -52,9 +55,13 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
         returnMenu.addActionListener(e -> {
             if (e.getSource() == returnMenu) {
                 try {
-                  //  removeAll(menuWindow, searchBar, search, database, dataArea);
+                        UserMenu.createGUI(removeAll(menuWindow, searchBar, search, returnMenu));
+                        database.removeAll();
+                        dataArea.removeAll();
+                        dataArea.setVisible(false);
+
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error!");
+                    JOptionPane.showMessageDialog(null, ex.toString());
                 }
             }
         });
@@ -62,13 +69,10 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
         menuWindow.setSize(2000,1000);
         return menuWindow;
     }
-    public static String itemName(String name) {
-        return name;
-    }
 
     public static JTextArea pSearch(JTextField searchBar) {
         Connection conn = Main.connect();
-        JTextArea search2 = new JTextArea();
+        JTextArea info = new JTextArea();
         try {
             int searching = parseInt(searchBar.getText());
 
@@ -85,15 +89,13 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
                     String prodLocation = rs.getString("PRODUCT_LOCATION");
                     String prodQuan = rs.getString("PRODUCT_STOCK");
 
-                    search2.append(id);
-                    search2.append("          \n" +prodId);
-                    search2.append("          \n" +prodName);
-                    search2.append("         \n£" + prodPrice);
-                    search2.append("          \n" +prodLocation);
-                    search2.append("          \n" +prodQuan);
-
+                    info.append(id);
+                    info.append("          \n" +prodId);
+                    info.append("          \n" +prodName);
+                    info.append("         \n£" + prodPrice);
+                    info.append("          \n" +prodLocation);
+                    info.append("          \n" +prodQuan);
             }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -105,14 +107,13 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
                 System.out.println(ex.getMessage());
             }
         }
-        return search2;
+        return info;
     }
 
-    public static JFrame removeAll(JFrame menuWindow, JTextField searchBar, JButton search, JScrollPane database, JTextArea dataArea) {
+    public static JFrame removeAll(JFrame menuWindow, JTextField searchBar, JButton search, JButton returnMenu) {
         menuWindow.remove(search);
         menuWindow.remove(searchBar);
-        menuWindow.remove(database);
-        menuWindow.remove(dataArea);
+        menuWindow.remove(returnMenu);
         return menuWindow;
     }
 

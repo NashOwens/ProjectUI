@@ -42,11 +42,11 @@ public class Login {
                 else {
                     JOptionPane.showMessageDialog(null, "Incorrect User Code\nYou have " + (3 - attempt) + " more attempt(s)");
                     Main.loginFailReturn(menuWindow);
-
                 }
             }
             if (success) {
-                UserMenu.createGUI(menuWindow, conn);
+                LogReport.UserReport(username);
+                UserMenu.createGUI(menuWindow);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
