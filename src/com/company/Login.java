@@ -8,14 +8,14 @@ import java.sql.Statement;
 
 
 public class Login {
+    public static boolean dataRole;
     public static int attempt = 0;
-    public static String[] login(String[] details, Connection conn, JFrame menuWindow) {
+    public static void login(String[] details, Connection conn, JFrame menuWindow) {
         String username = details[0];
         String password = details[1];
-        String dataRole = null;
         try {
-            String dataUsername = null;
-            String dataPassword = null;
+            String dataUsername;
+            String dataPassword;
             String sql = "SELECT USERNAME, PASSWORD, ROLE FROM users";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -23,7 +23,7 @@ public class Login {
             while (rs.next()) {
                 dataUsername = rs.getString("USERNAME");
                 dataPassword = rs.getString("PASSWORD");
-                dataRole = rs.getString("ROLE");
+                dataRole = rs.getBoolean("ROLE");
                 if (dataUsername.equals(username) && dataPassword.equals(password)) {
                     JOptionPane.showMessageDialog(null, "Correct Login details!\nHello " + username);
                     success = true;
@@ -44,10 +44,13 @@ public class Login {
                     Main.loginFailReturn(menuWindow);
                 }
             }
-            if (success) {
-                LogReport.UserReport(username);
+            if ((success && dataRole)) {
+                AdminMenu.createGUI(menuWindow);
+            }
+            if ((success && !dataRole)) {
                 UserMenu.createGUI(menuWindow);
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             System.out.println("Error! Username and/or password is incorrect.");
@@ -60,7 +63,6 @@ public class Login {
                 System.out.println(ex.getMessage());
             }
         }
-        return new String[]{username, password, dataRole};
     }
 
 }

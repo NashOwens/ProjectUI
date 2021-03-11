@@ -3,22 +3,22 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import static java.lang.Integer.numberOfTrailingZeros;
 import static java.lang.Integer.parseInt;
 
 public abstract class SearchProduct extends JFrame implements ActionListener {
 
+    // Sets the UI for the appropriate class
+
     private static JScrollPane database;
     private static JInternalFrame dataArea;
 
-    public static JFrame createGUI(JFrame menuWindow) {
+    public static void createGUI(JFrame menuWindow) {
+        System.out.println(Login.dataRole);
 
         menuWindow.setLayout(new GridBagLayout());
 
@@ -55,19 +55,26 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
         returnMenu.addActionListener(e -> {
             if (e.getSource() == returnMenu) {
                 try {
-                        UserMenu.createGUI(removeAll(menuWindow, searchBar, search, returnMenu));
-                        database.removeAll();
-                        dataArea.removeAll();
-                        dataArea.setVisible(false);
+                    System.out.println(Login.dataRole);
+                    database.removeAll();
+                    dataArea.removeAll();
+                    dataArea.setVisible(false);
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
+                } finally {
+                    if (Login.dataRole) {
+                        AdminMenu.createGUI(removeAll(menuWindow, searchBar, search, returnMenu));
+                    }
+                    if (!Login.dataRole){
+                        UserMenu.createGUI(removeAll(menuWindow, searchBar, search, returnMenu));
+                    }
+                    System.out.println(Login.dataRole);
                 }
             }
         });
 
         menuWindow.setSize(2000,1000);
-        return menuWindow;
     }
 
     public static JTextArea pSearch(JTextField searchBar) {
@@ -109,8 +116,8 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
         }
         return info;
     }
-
-    public static JFrame removeAll(JFrame menuWindow, JTextField searchBar, JButton search, JButton returnMenu) {
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
+    private static JFrame removeAll(JFrame menuWindow, JTextField searchBar, JButton search, JButton returnMenu) {
         menuWindow.remove(search);
         menuWindow.remove(searchBar);
         menuWindow.remove(returnMenu);

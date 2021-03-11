@@ -12,7 +12,9 @@ import static java.lang.Integer.parseInt;
 
 public abstract class AddProduct extends JFrame implements ActionListener {
 
-    public static JFrame createGUI(JFrame menuWindow) {
+    // Sets the UI for the appropriate class
+
+    public static void createGUI(JFrame menuWindow) {
         menuWindow.setLayout(new GridBagLayout());
         menuWindow.setSize(2000, 1001);
 
@@ -61,15 +63,15 @@ public abstract class AddProduct extends JFrame implements ActionListener {
             } catch (NullPointerException ex) {
                 JOptionPane.showMessageDialog(null, ex.toString());
             } finally {
-                UserMenu.userMenuReturn(removeAll(menuWindow, enterID, enterProductName, enterProductPrice, enterProductLocation,
+                AdminMenu.createGUI(removeAll(menuWindow, enterID, enterProductName, enterProductPrice, enterProductLocation,
                         enterStockQuantity, ID, productName, productPrice, productLocation, stockQuantity, submit));
             }
 
         });
 
-        return menuWindow;
     }
-    public static JFrame removeAll(JFrame menuWindow, JLabel enterID, JLabel enterProductName, JLabel enterProductPrice,
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
+    private static JFrame removeAll(JFrame menuWindow, JLabel enterID, JLabel enterProductName, JLabel enterProductPrice,
                                    JLabel enterProductLocation, JLabel enterStockQuantity, JTextField ID, JTextField productName,
                                    JTextField productPrice, JTextField productLocation, JTextField stockQuantity,
                                    JButton submit) {

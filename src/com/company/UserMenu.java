@@ -2,29 +2,19 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 
 public abstract class UserMenu extends JFrame implements ActionListener {
 
-    private static JButton deleteProduct, addProduct, viewProduct, searchProduct, sortProduct, editProduct;
-    private static JButton deleteUser, addUser, editUser;
-    private static JButton exit;
-
     public static JFrame createGUI(JFrame menuWindow) {
+
+        // Sets the UI for the appropriate class
 
         menuWindow.setLayout(new GridBagLayout());
         menuWindow.setSize(2000, 1002);
 
-        deleteProduct = new JButton("Delete Product");
-        menuWindow.add(deleteProduct);
-
-        addProduct = new JButton("Add Product");
-        menuWindow.add(addProduct);
-
-        JButton editProduct = new JButton("Edit Product");
-        menuWindow.add(editProduct);
+        JButton logOut = new JButton("Logout");
+        menuWindow.add(logOut);
 
         JButton searchProduct = new JButton("Search Product");
         menuWindow.add(searchProduct);
@@ -32,32 +22,17 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         JButton viewProduct = new JButton("View Product");
         menuWindow.add(viewProduct);
 
-        deleteProduct.addActionListener(e -> {
-            if (e.getSource() == deleteProduct) {
-                try {
-                    DeleteProduct.productDelSelc(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct));
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
-                }
-            }
-        });
+        // all these buttons call their appropriate function when clicked
+        // when passing through the same JFrame i pass through the remove all function to clear all objects to allow a
+        // "blank slate" so to speak to create the new menu
 
-        addProduct.addActionListener(e -> {
-            if (e.getSource() == addProduct) {
+        logOut.addActionListener(e -> {
+            if (e.getSource() == logOut) {
                 try {
-                    AddProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct));
+                    LoginMenu.createGUI(removeAll(menuWindow, searchProduct, viewProduct, logOut), Main.connect());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
-                }
-            }
-        });
 
-        editProduct.addActionListener(e -> {
-            if (e.getSource() == editProduct) {
-                try {
-                    EditProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct));
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
                 }
             }
         });
@@ -65,7 +40,7 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         viewProduct.addActionListener(e -> {
             if (e.getSource() == viewProduct) {
                 try {
-                    ViewProducts.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct));
+                    ViewProducts.createGUI(removeAll(menuWindow, searchProduct, viewProduct, logOut));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
@@ -75,26 +50,20 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         searchProduct.addActionListener(e -> {
             if (e.getSource() == searchProduct) {
                 try {
-                    SearchProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct));
+                    SearchProduct.createGUI(removeAll(menuWindow, searchProduct, viewProduct, logOut));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
             }
         });
-
         return menuWindow;
     }
-    public static JFrame userMenuReturn(JFrame menuWindow) {
-        return UserMenu.createGUI(menuWindow);
-    }
-
-    public static JFrame removeAll(JFrame menuWindow, JButton deleteProduct, JButton addProduct, JButton editProduct, JButton searchProduct, JButton viewProduct){
-        menuWindow.remove(deleteProduct);
-        menuWindow.remove(addProduct);
-        menuWindow.remove(editProduct);
+    // returns the JFrame to the userMenu
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
+    private static JFrame removeAll(JFrame menuWindow, JButton searchProduct, JButton viewProduct, JButton logOut){
         menuWindow.remove(searchProduct);
         menuWindow.remove(viewProduct);
+        menuWindow.remove(logOut);
         return menuWindow;
-
     }
 }

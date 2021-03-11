@@ -5,8 +5,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Vector;
 
 public abstract class ViewProducts extends JFrame implements ActionListener {
 
@@ -14,7 +12,9 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
     private static JTable table;
     private static JScrollPane scroll;
 
-    public static JFrame createGUI(JFrame menuWindow) {
+    public static void createGUI(JFrame menuWindow) {
+
+        // Sets the UI for the appropriate class
 
         menuWindow.setLayout(new GridBagLayout());
 
@@ -24,10 +24,16 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
         returnMenu.addActionListener(e -> {
             if (e.getSource() == returnMenu){
                 try {
-                    UserMenu.createGUI(removeAll(menuWindow, returnMenu, table, scroll));
+                    if (Login.dataRole = true) {
+                        AdminMenu.createGUI(removeAll(menuWindow, returnMenu, table, scroll));
+                    }
+                    if (Login.dataRole = false){
+                        UserMenu.createGUI(removeAll(menuWindow, returnMenu, table, scroll));
+                    }
                 }catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
+                System.out.println(Login.dataRole);
             }
         });
         menuWindow.setSize(2000, 1001);
@@ -36,8 +42,8 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
 
         showTableData(menuWindow);
 
-        return menuWindow;
     }
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
     public static JFrame removeAll(JFrame menuWindow, JButton returnMenu, JTable table, JScrollPane scroll) {
         menuWindow.remove(returnMenu);
         menuWindow.remove(table);
@@ -45,7 +51,7 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
         return menuWindow;
     }
 
-    public static JFrame showTableData(JFrame menuWindow) {
+    public static void showTableData(JFrame menuWindow) {
 
         menuWindow.setDefaultCloseOperation(EXIT_ON_CLOSE);
         menuWindow.setLayout(new BorderLayout());
@@ -62,11 +68,6 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setVerticalScrollBarPolicy(
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        String Id = "";
-        String name = "";
-        String Price = "";
-        String Loc = "";
-        String Quant = "";
         try {
 
             Connection con = Main.connect();
@@ -75,11 +76,11 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
             ResultSet rs = ps.executeQuery();
             int i = 0;
             while (rs.next()) {
-                Id = rs.getString("PRODUCT_ID");
-                name = rs.getString("PRODUCT_NAME");
-                Price = rs.getString("PRODUCT_PRICE");
-                Loc = rs.getString("PRODUCT_LOCATION");
-                Quant = rs.getString("PRODUCT_STOCK");
+                String Id = rs.getString("PRODUCT_ID");
+                String name = rs.getString("PRODUCT_NAME");
+                String Price = rs.getString("PRODUCT_PRICE");
+                String Loc = rs.getString("PRODUCT_LOCATION");
+                String Quant = rs.getString("PRODUCT_STOCK");
                 model.addRow(new Object[]{Id, name, Price, Loc, Quant});
                 i++;
             }
@@ -97,7 +98,6 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
         menuWindow.setVisible(true);
         menuWindow.setSize(2000, 1001);
         menuWindow.setSize(2000, 1000);
-        return menuWindow;
     }
 }
 

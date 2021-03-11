@@ -2,21 +2,19 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.sql.Connection;
-
-
 
 public abstract class LoginMenu extends JFrame implements ActionListener {
 
 
     private static JButton loginButton;
     private static JTextField usernameBox, passwordBox;
-    public static Connection conn = Main.connect();
 
     public static JFrame createGUI(JFrame menuWindow, Connection conn) {
+
+        // Sets the UI for the appropriate class
+
 
         menuWindow.setLayout(new GridBagLayout());
 
@@ -38,6 +36,10 @@ public abstract class LoginMenu extends JFrame implements ActionListener {
         JButton forgotButton = new JButton("Forgot?");
         menuWindow.add(forgotButton);
 
+        // when passing through the same JFrame i pass through the remove all function to clear all objects to allow a
+        // "blank slate" so to speak to create the new menu
+        //
+
         loginButton.addActionListener(e -> {
             if (e.getSource() == loginButton) {
                 try {
@@ -56,7 +58,8 @@ public abstract class LoginMenu extends JFrame implements ActionListener {
 
         return menuWindow;
     }
-    public static JFrame removeAll(JFrame menuWindow, JLabel user, JLabel pass, JTextField usernameBox, JTextField passwordBox, JButton loginButton, JButton forgotButton) {
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
+    private static JFrame removeAll(JFrame menuWindow, JLabel user, JLabel pass, JTextField usernameBox, JTextField passwordBox, JButton loginButton, JButton forgotButton) {
         menuWindow.remove(user);
         menuWindow.remove(pass);
         menuWindow.remove(usernameBox);
@@ -65,7 +68,7 @@ public abstract class LoginMenu extends JFrame implements ActionListener {
         menuWindow.remove(forgotButton);
         return menuWindow;
     }
-
+    // gets the username and password of the user
     public static String[] userDetails(String user, String pass) {
         return new String[]{user, pass};
     }

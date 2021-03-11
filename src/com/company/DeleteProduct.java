@@ -6,16 +6,17 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
 public abstract class DeleteProduct extends JFrame implements ActionListener {
 
+    // Sets the UI for the appropriate class
+
     private static JTextField ID;
     private static JButton Submit;
 
-    public static JFrame productDelSelc(JFrame menuWindow){
+    public static void productDelSelc(JFrame menuWindow){
 
         menuWindow.setLayout(new GridBagLayout());
         menuWindow.setSize(2000, 1001);
@@ -38,14 +39,14 @@ public abstract class DeleteProduct extends JFrame implements ActionListener {
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Please enter an Integer ID");
                 } finally {
-                    UserMenu.userMenuReturn(removeAll(menuWindow, enterID, Submit, ID));
+                    AdminMenu.createGUI(removeAll(menuWindow, enterID, Submit, ID));
                 }
             }
         });
 
-        return menuWindow;
     }
-    public static JFrame removeAll(JFrame menuWindow, JLabel enterID, JButton submit, JTextField ID) {
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
+    private static JFrame removeAll(JFrame menuWindow, JLabel enterID, JButton submit, JTextField ID) {
         menuWindow.remove(enterID);
         menuWindow.remove(submit);
         menuWindow.remove(ID);
