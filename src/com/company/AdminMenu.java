@@ -35,6 +35,18 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
         // when passing through the same JFrame i pass through the remove all function to clear all objects to allow a
         // "blank slate" so to speak to create the new menu
 
+        logOut.addActionListener(e -> {
+            if (e.getSource() == logOut) {
+                try {
+                    Login.attempt = 0;
+                    LoginMenu.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct, logOut), Main.connect());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.toString());
+
+                }
+            }
+        });
+
         deleteProduct.addActionListener(e -> {
             if (e.getSource() == deleteProduct) {
                 try {

@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LogReport {
-    public static void UserReport (String username) {
+    public static void UserReport (String[] details) {
         JFileChooser file = new JFileChooser();
 
 

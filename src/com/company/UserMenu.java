@@ -29,10 +29,10 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         logOut.addActionListener(e -> {
             if (e.getSource() == logOut) {
                 try {
+                    Login.attempt = 0;
                     LoginMenu.createGUI(removeAll(menuWindow, searchProduct, viewProduct, logOut), Main.connect());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
-
                 }
             }
         });
