@@ -39,6 +39,15 @@ public abstract class LoginMenu extends JFrame implements ActionListener {
         // when passing through the same JFrame i pass through the remove all function to clear all objects to allow a
         // "blank slate" so to speak to create the new menu
         //
+        forgotButton.addActionListener(e -> {
+            if (e.getSource() == forgotButton) {
+                try {
+                    JOptionPane.showMessageDialog(null, "Please ask a manager or admin to get your login details");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "error");
+                }
+            }
+        });
 
         loginButton.addActionListener(e -> {
             if (e.getSource() == loginButton) {

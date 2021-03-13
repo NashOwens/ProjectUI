@@ -6,9 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
-public abstract class ViewProducts extends JFrame implements ActionListener {
+public abstract class ViewUsers extends JFrame implements ActionListener {
 
-    private static final String[] columnNames = {"ID", "PName", "test", "test"};
+    private static final String[] columnNames = {"ID", "USERNAME", "PASSWORD", "ROLE"};
     private static JTable table;
     private static JScrollPane scroll;
 
@@ -24,10 +24,10 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
         returnMenu.addActionListener(e -> {
             if (e.getSource() == returnMenu){
                 try {
-                    if (Login.dataRole) {
+                    if (Login.dataRole = true) {
                         AdminMenu.createGUI(removeAll(menuWindow, returnMenu, table, scroll));
                     }
-                    if (!Login.dataRole){
+                    if (Login.dataRole = false){
                         UserMenu.createGUI(removeAll(menuWindow, returnMenu, table, scroll));
                     }
                 }catch (Exception ex) {
@@ -71,24 +71,23 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
         try {
 
             Connection con = Main.connect();
-            String sql = "SELECT * FROM products";
+            String sql = "SELECT * FROM users";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             int i = 0;
             while (rs.next()) {
-                String Id = rs.getString("PRODUCT_ID");
-                String name = rs.getString("PRODUCT_NAME");
-                String Price = rs.getString("PRODUCT_PRICE");
-                String Loc = rs.getString("PRODUCT_LOCATION");
-                String Quant = rs.getString("PRODUCT_STOCK");
-                model.addRow(new Object[]{Id, name, Price, Loc, Quant});
+                String Id = rs.getString("ID");
+                String name = rs.getString("USERNAME");
+                String pass = rs.getString("PASSWORD");
+                String role = rs.getString("ROLE");
+                model.addRow(new Object[]{Id, name, pass, role});
                 i++;
             }
             if (i < 1) {
-                JOptionPane.showMessageDialog(null, "No Record Found", "Error",
+                JOptionPane.showMessageDialog(null, "No Users Found", "Error",
                         JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, i + " Record(s) Found");
+                JOptionPane.showMessageDialog(null, i + " User(s) Found");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error",
@@ -100,4 +99,3 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
         menuWindow.setSize(2000, 1000);
     }
 }
-
