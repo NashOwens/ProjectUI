@@ -45,7 +45,8 @@ public abstract class DeleteProduct extends JFrame implements ActionListener {
         });
 
     }
-    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively
+    // making a new menu
     private static JFrame removeAll(JFrame menuWindow, JLabel enterID, JButton submit, JTextField ID) {
         menuWindow.remove(enterID);
         menuWindow.remove(submit);

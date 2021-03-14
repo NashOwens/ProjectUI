@@ -43,7 +43,8 @@ public abstract class ViewProducts extends JFrame implements ActionListener {
         showTableData(menuWindow);
 
     }
-    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively
+    // making a new menu
     public static JFrame removeAll(JFrame menuWindow, JButton returnMenu, JTable table, JScrollPane scroll) {
         menuWindow.remove(returnMenu);
         menuWindow.remove(table);

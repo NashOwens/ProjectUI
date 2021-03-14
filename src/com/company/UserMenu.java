@@ -59,7 +59,8 @@ public abstract class UserMenu extends JFrame implements ActionListener {
         return menuWindow;
     }
     // returns the JFrame to the userMenu
-    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively making
+    // a new menu
     private static JFrame removeAll(JFrame menuWindow, JButton searchProduct, JButton viewProduct, JButton logOut){
         menuWindow.remove(searchProduct);
         menuWindow.remove(viewProduct);

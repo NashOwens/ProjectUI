@@ -34,6 +34,9 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
         JButton viewUser = new JButton("View Users");
         menuWindow.add(viewUser);
 
+        JButton addUsers = new JButton("Add Users");
+        menuWindow.add(addUsers);
+
         // all these buttons call their appropriate function when clicked
         // when passing through the same JFrame i pass through the remove all function to clear all objects to allow a
         // "blank slate" so to speak to create the new menu
@@ -42,7 +45,8 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
             if (e.getSource() == logOut) {
                 try {
                     Login.attempt = 0;
-                    LoginMenu.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct, logOut, viewUser), Main.connect());
+                    LoginMenu.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct,
+                            viewProduct, logOut, viewUser, addUsers), Main.connect());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
 
@@ -50,10 +54,22 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
             }
         });
 
+        addUsers.addActionListener(e -> {
+            if (e.getSource()== addUsers) {
+                try {
+                    addUser.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct,
+                            viewProduct, logOut, viewUser, addUsers));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.toString());
+                }
+            }
+        });
+
         deleteProduct.addActionListener(e -> {
             if (e.getSource() == deleteProduct) {
                 try {
-                    DeleteProduct.productDelSelc(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct, logOut, viewUser));
+                    DeleteProduct.productDelSelc(removeAll(menuWindow, deleteProduct, addProduct, editProduct,
+                            searchProduct, viewProduct, logOut, viewUser, addUsers));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
@@ -63,7 +79,8 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
         addProduct.addActionListener(e -> {
             if (e.getSource() == addProduct) {
                 try {
-                    AddProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct, logOut, viewUser));
+                    AddProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct,
+                            viewProduct, logOut, viewUser, addUsers));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
@@ -73,7 +90,8 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
         editProduct.addActionListener(e -> {
             if (e.getSource() == editProduct) {
                 try {
-                    EditProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct, logOut, viewUser));
+                    EditProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct,
+                            viewProduct, logOut, viewUser, addUsers));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
@@ -83,7 +101,8 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
         viewProduct.addActionListener(e -> {
             if (e.getSource() == viewProduct) {
                 try {
-                    ViewProducts.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct, logOut, viewUser));
+                    ViewProducts.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct,
+                            viewProduct, logOut, viewUser, addUsers));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
@@ -93,7 +112,8 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
         searchProduct.addActionListener(e -> {
             if (e.getSource() == searchProduct) {
                 try {
-                    SearchProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct, logOut, viewUser));
+                    SearchProduct.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct,
+                            viewProduct, logOut, viewUser, addUsers));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
@@ -103,7 +123,8 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
         viewUser.addActionListener(e -> {
             if (e.getSource()== viewUser){
                 try {
-                    ViewUsers.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct, viewProduct, logOut, viewUser));
+                    ViewUsers.createGUI(removeAll(menuWindow, deleteProduct, addProduct, editProduct, searchProduct,
+                            viewProduct, logOut, viewUser, addUsers));
                 }catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Error");
                 }
@@ -113,7 +134,9 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
         return menuWindow;
     }
     // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
-    private static JFrame removeAll(JFrame menuWindow, JButton deleteProduct, JButton addProduct, JButton editProduct, JButton searchProduct, JButton viewProduct, JButton logOut, JButton viewUser){
+    private static JFrame removeAll(JFrame menuWindow, JButton deleteProduct, JButton addProduct, JButton editProduct,
+                                    JButton searchProduct, JButton viewProduct, JButton logOut, JButton viewUser,
+                                    JButton addUsers){
         menuWindow.remove(deleteProduct);
         menuWindow.remove(addProduct);
         menuWindow.remove(editProduct);
@@ -121,6 +144,7 @@ public abstract class AdminMenu extends JFrame implements ActionListener {
         menuWindow.remove(viewProduct);
         menuWindow.remove(logOut);
         menuWindow.remove(viewUser);
+        menuWindow.remove(addUsers);
         return menuWindow;
 
     }

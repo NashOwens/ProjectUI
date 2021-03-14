@@ -25,7 +25,8 @@ public class Login {
                 dataPassword = rs.getString("PASSWORD");
                 dataRole = rs.getBoolean("ROLE");
                 if (dataUsername.equals(username) && dataPassword.equals(password)) {
-                    JOptionPane.showMessageDialog(null, "Correct Login details!\nHello " + username);
+                    JOptionPane.showMessageDialog(null, "Correct Login details!\nHello "
+                            + username);
                     success = true;
                 }
                 if (success) {
@@ -40,7 +41,8 @@ public class Login {
                     System.exit(0);
                 }
                 else {
-                    JOptionPane.showMessageDialog(null, "Incorrect User Code\nYou have " + (3 - attempt) + " more attempt(s)");
+                    JOptionPane.showMessageDialog(null, "Incorrect User Code\nYou have "
+                            + (3 - attempt) + " more attempt(s)");
                     Main.loginFailReturn(menuWindow);
                 }
             }

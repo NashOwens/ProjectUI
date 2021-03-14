@@ -35,7 +35,8 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
         search.addActionListener(e -> {
             if (e.getSource() == search) {
                 try {
-                    dataArea = new JInternalFrame("Item",false, true, false, false);
+                    dataArea = new JInternalFrame("Item",false, true, false,
+                            false);
                     dataArea.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                     dataArea.setLayout(new GridBagLayout());
                     dataArea.setSize(20,20);
@@ -59,17 +60,14 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
                     database.removeAll();
                     dataArea.removeAll();
                     dataArea.setVisible(false);
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
-                } finally {
                     if (Login.dataRole) {
                         AdminMenu.createGUI(removeAll(menuWindow, searchBar, search, returnMenu));
                     }
                     if (!Login.dataRole){
                         UserMenu.createGUI(removeAll(menuWindow, searchBar, search, returnMenu));
                     }
-                    System.out.println(Login.dataRole);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.toString());
                 }
             }
         });
@@ -116,7 +114,8 @@ public abstract class SearchProduct extends JFrame implements ActionListener {
         }
         return info;
     }
-    // removes all the object's within the current JFrame to allow construction of new objects - effectively making a new menu
+    // removes all the object's within the current JFrame to allow construction of new objects - effectively making
+    // a new menu
     private static JFrame removeAll(JFrame menuWindow, JTextField searchBar, JButton search, JButton returnMenu) {
         menuWindow.remove(search);
         menuWindow.remove(searchBar);

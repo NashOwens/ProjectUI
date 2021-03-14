@@ -63,8 +63,9 @@ public abstract class AddProduct extends JFrame implements ActionListener {
             } catch (NullPointerException ex) {
                 JOptionPane.showMessageDialog(null, ex.toString());
             } finally {
-                AdminMenu.createGUI(removeAll(menuWindow, enterID, enterProductName, enterProductPrice, enterProductLocation,
-                        enterStockQuantity, ID, productName, productPrice, productLocation, stockQuantity, submit));
+                AdminMenu.createGUI(removeAll(menuWindow, enterID, enterProductName, enterProductPrice,
+                        enterProductLocation, enterStockQuantity, ID, productName, productPrice,
+                        productLocation, stockQuantity, submit));
             }
 
         });
